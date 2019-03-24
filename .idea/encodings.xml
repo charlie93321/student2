@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AnnoStudy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AsynMvc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AsynServlet" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AsynStudy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mysql" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/servlet3" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/servletmvc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springevent" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springioc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ssm_mybatis" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tx" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zookeeperApi" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

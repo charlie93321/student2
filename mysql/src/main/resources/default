@@ -1,0 +1,21 @@
+
+
+
+hadoop01/hadoop04
+
+CHANGE MASTER TO
+MASTER_HOST='hadoop03',
+MASTER_USER='root',
+MASTER_PASSWORD='hadoop',
+MASTER_LOG_FILE='mysql-bin.000005',
+MASTER_LOG_POS=245;
+
+hadoop03/hadoop02
+
+
+CHANGE MASTER TO
+MASTER_HOST='hadoop01',
+MASTER_USER='root',
+MASTER_PASSWORD='hadoop',
+MASTER_LOG_FILE='mysql-bin.000005',
+MASTER_LOG_POS=245;

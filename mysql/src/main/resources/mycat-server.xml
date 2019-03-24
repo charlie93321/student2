@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+
+    <schema name="TESTDB" checkSQLschema="false" sqlMaxLimit="100">
+        <!-- auto sharding by id (long) -->
+        <table name="travelrecord" dataNode="dn1,dn2,dn3" rule="auto-sharding-long" />
+
+        <!-- global table is auto cloned to all defined data nodes ,so can join
+                with any table whose sharding node is in the same data node -->
+        <table name="company" primaryKey="ID" type="global" dataNode="dn1,dn2,dn3" />
+        <table name="goods" primaryKey="ID" type="global" dataNode="dn1,dn2" />
+        <!-- random sharding using mod sharind rule -->
+        <table name="hotnews" primaryKey="ID" autoIncrement="true" dataNode="dn1,dn2,dn3"
+               rule="mod-long" />
+        <!-- <table name="dual" primaryKey="ID" dataNode="dnx,dnoracle2" type="global"
+                needAddLimit="false"/> <table name="worker" primaryKey="ID" dataNode="jdbc_dn1,jdbc_dn2,jdbc_dn3"
+                rule="mod-long" /> -->
+        <table name="employee" primaryKey="ID" dataNode="dn1,dn2"
+               rule="sharding-by-intfile" />
+        <table name="customer" primaryKey="ID" dataNode="dn1,dn2"
+               rule="sharding-by-intfile">
+            <childTable name="orders" primaryKey="ID" joinKey="customer_id"
+                        parentKey="id">
+                <childTable name="order_items" joinKey="order_id"
+                            parentKey="id" />
+            </childTable>
+            <childTable name="customer_addr" primaryKey="ID" joinKey="customer_id"
+                        parentKey="id" />
+        </table>
+        <!-- <table name="oc_call" primaryKey="ID" dataNode="dn1$0-743" rule="latest-month-calldate"
+                /> -->
+    </schema>
+    <!-- <dataNode name="dn1$0-743" dataHost="localhost1" database="db$0-743"
+            /> -->
+    <dataNode name="dn1" dataHost="biaoji_host" database="db1" />
+    <dataNode name="dn2" dataHost="biaoji_host" database="db2" />
+    <dataNode name="dn3" dataHost="biaoji_host" database="db3" />
+    <!--
+schema.xml中的balance的取值决定了负载均衡对非事务内的读操作的处理：
+
+balance="0"：读请求仅发送到writeHost上（不开启读写分离）。
+
+balance="1"：读请求随机分发到当前writeHost对应的readHost和standby的writeHost上。
+
+balance="2"：读请求随机分发到当前dataHost内所有的writeHost和readHost上。
+
+balance="3"：读请求随机分发到当前writeHost对应的readHost上。
+
+    -->
+    <dataHost name="biaoji_host" maxCon="1000" minCon="10" balance="1"
+              writeType="3" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+        <heartbeat>select user()</heartbeat>
+        <!-- can have multi write hosts -->
+        <writeHost host="hadoop01" url="hadoop01:3306" user="root"
+                   password="hadoop">
+            <!-- can have multi read hosts -->
+            <readHost host="hadoop02" url="hadoop02:3306" user="root" password="hadoop" />
+        </writeHost>
+        <writeHost host="hadoop03" url="hadoop03:3306" user="root"
+                   password="hadoop" />
+    </dataHost>
+
+</mycat:schema>
